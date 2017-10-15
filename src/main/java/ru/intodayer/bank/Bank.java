@@ -2,25 +2,25 @@ package ru.intodayer.bank;
 
 
 public class Bank {
-    private int moneyAmount;
+    private int bankAccount;
 
     public Bank(int moneyAmount) {
-        this.moneyAmount = moneyAmount;
+        this.bankAccount = moneyAmount;
     }
 
     private void checkEnoughMoney(int amount) {
-        if (moneyAmount - amount < 0)
+        if (bankAccount - amount < 0)
             throw new NotEnoughMoneyException(
-                    NotEnoughMoneyException.getMessage(moneyAmount, amount)
+                    NotEnoughMoneyException.getMessage(bankAccount, amount)
             );
     }
 
     public void getMoney(int amount) {
         checkEnoughMoney(amount);
-        moneyAmount -= amount;
+        bankAccount -= amount;
     }
 
     public boolean hasMoney() {
-        return moneyAmount > 0;
+        return bankAccount > 0;
     }
 }
