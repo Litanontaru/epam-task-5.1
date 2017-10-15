@@ -4,7 +4,7 @@ import ru.intodayer.bank.Bank;
 
 
 public class BankUser extends Thread {
-    private Bank bank;
+    private final Bank bank;
     private int moneyAmount;
 
     public BankUser(Bank bank, int moneyAmount) {
@@ -14,13 +14,19 @@ public class BankUser extends Thread {
 
     @Override
     public void run() {
-        while (bank.hasMoney()) {
-            try {
-                System.out.println(getName() + " bank has " + bank.getBankAccount());
-                bank.getMoney(moneyAmount);
-                Thread.sleep(200);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        while (true) {
+            synchronized (bank) {
+                try {
+                    if (bank.hasMoney()) {
+                        System.out.println(getName() + "\t| bank account: " + bank.getBankAccount());
+                        bank.getMoney(moneyAmount);
+                        Thread.sleep(10);
+                    } else {
+                        break;
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
