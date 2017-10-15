@@ -8,6 +8,10 @@ public class Bank {
         this.bankAccount = moneyAmount;
     }
 
+    public int getBankAccount() {
+        return bankAccount;
+    }
+
     private void checkEnoughMoney(int amount) {
         if (bankAccount - amount < 0)
             throw new NotEnoughMoneyException(
